@@ -12,6 +12,8 @@ const HEROES: Hero[] = [
   {id:5, name:'Magma'}
 ];
 
+
+
 // const HEROES: Hero[] = [
 //   { id: 11, name: 'Mr. Nice' },
 //   { id: 12, name: 'Narco' },
@@ -29,12 +31,18 @@ console.log("ues" + HEROES[1].name);
 @Component({
   selector: 'my-app',
   template: `
-  <h1> One </h1>
   <ul class="heroes">
-  <li *ngFor="let hero of heroes">
+  <li *ngFor="let hero of heroes" (click)="onSelect(hero)">
     <span class="badge">{{hero.id}}</span> {{hero.name}}
   </li>
 </ul>
+
+<div *ngIf="selectedHero">
+<h1>Hero Details</h1>
+<h3>Id : {{selectedHero.id}}</h3>
+<h3>Name: <input [(ngModel)]="selectedHero.name" placeholder=Name></h3>
+
+</div>
   <div>
  
 </div>
@@ -93,6 +101,10 @@ export class AppComponent {
   title = 'Tour of Heros';
   name = 'Windstorm';
   heroes = HEROES;
+  selectedHero : Hero;
+  onSelect(hero:Hero): void {
+    this.selectedHero = hero
+  }
   }
 
 
