@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
 import {Hero} from './hero';
+import { HeroService } from './hero.service';
+import {OnInit} from '@angular/core'
 
-const HEROES: Hero[] = [
-  {id:1, name:'Winter'},
-  {id:2, name:'Fell'},
-  {id:3, name:'Tywin'},
-  {id:4, name:'Laninster'},
-  {id:5, name:'Magma'}
-];
+// const HEROES: Hero[] = [
+//   {id:1, name:'Winter'},
+//   {id:2, name:'Fell'},
+//   {id:3, name:'Tywin'},
+//   {id:4, name:'Laninster'},
+//   {id:5, name:'Magma'}
+// ];
+
 
 
 
@@ -24,9 +27,11 @@ const HEROES: Hero[] = [
 //   { id: 20, name: 'Tornado' }
 // ];
 
-console.log("ues" + HEROES[1].name);
+
+
 @Component({
   selector: 'my-app',
+  providers: [HeroService],
   template: `
   <ul class="heroes">
   <li *ngFor="let hero of heroes" (click)="onSelect(hero)">
@@ -89,10 +94,19 @@ console.log("ues" + HEROES[1].name);
   }
 `]
 })
-export class AppComponent { 
+
+export class AppComponent implements OnInit { 
   title = 'Tour of Heros';
   name = 'Windstorm';
-  heroes = HEROES;
+  constructor(private heroService: HeroService) { }
+  heroes: Hero[];
+  
+
+  ngOnInit(): void {
+    this.heroes = this.heroService.getHeroes();
+  }
+  
+    
   selectedHero : Hero;
   onSelect(hero:Hero): void {
     this.selectedHero = hero
